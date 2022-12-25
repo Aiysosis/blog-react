@@ -1,8 +1,13 @@
+import { ActionFunction, LoaderFunction } from "react-router-dom";
+
 export interface APIResponse {
 	readonly status: number;
 	readonly message: string;
 	readonly data: unknown;
 }
+
+export type LF = LoaderFunction;
+export type AF = ActionFunction;
 
 export interface Tag {
 	id: number;

@@ -1,0 +1,58 @@
+$navbarHeight: 60px;
+$pageFootHeight: 250px;
+.layout {
+	min-height: 100%;
+	.navbar {
+		height: $navbarHeight;
+		background-color: whitesmoke;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		// .nav-left{}
+		// .nav-center{}
+		.nav-right {
+			display: flex;
+			padding-right: 20px;
+			.nav-item {
+				position: relative;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				padding-left: 15px;
+				padding-right: 15px;
+				text-decoration: none;
+				transition: all 0.1s ease;
+				&:active {
+					transform: translateY(2px);
+					color: inherit;
+				}
+				&:hover {
+					.nav-underline {
+						width: 100%;
+					}
+				}
+				.nav-underline {
+					width: 0;
+					border-bottom: 2px rgb(40, 40, 40) solid;
+					position: relative;
+					top: 3px;
+					transition: all 0.2s ease;
+				}
+			}
+			.router-link-active {
+				.nav-underline {
+					width: 100%;
+				}
+			}
+		}
+	}
+	.outlet-main {
+		min-height: calc(100vh - $navbarHeight);
+	}
+	.page-foot {
+		height: $pageFootHeight;
+		background-color: whitesmoke;
+	}
+}
