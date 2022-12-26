@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import Layout from "../components/layout";
-import Blog from "../pages/blog";
-import Home from "../pages/home";
-import Serie from "../pages/series";
+import Layout from "../layout";
+import BlogPage from "../pages/blog";
+import HomePage from "../pages/home";
+import SeriePage from "../pages/series";
 
 export const routes: RouteObject[] = [
 	{
@@ -10,15 +10,15 @@ export const routes: RouteObject[] = [
 		children: [
 			{
 				path: "/",
-				element: <Blog />,
+				element: <BlogPage />,
 			},
 			{
 				path: "/home",
-				element: <Home />,
+				element: <HomePage />,
 			},
 			{
 				path: "/series",
-				element: <Serie />,
+				element: <SeriePage />,
 			},
 		],
 	},

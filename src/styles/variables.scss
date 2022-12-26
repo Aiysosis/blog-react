@@ -1,0 +1,15 @@
+// 结构线，如分割、轮廓、勾线
+// tools
+$tickLine: 1px solid #eaecef;
+
+// layout
+$navbarHeight: 60px;
+$pageFootHeight: 150px;
+
+// colors
+$themeColor: rgb(122, 67, 194);
+
+// helpers
+@function shadow($height, $blur) {
+	@return $height $height $blur #bebebe, -($height) - ($height) $blur #ffffff;
+}

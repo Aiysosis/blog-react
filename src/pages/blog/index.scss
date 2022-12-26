@@ -1,0 +1,48 @@
+@import "../../styles/variables.scss";
+
+.blog {
+	min-height: calc(100vh - $navbarHeight);
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding-top: 50px;
+	.left {
+		.blog-list {
+			width: 800px;
+		}
+		margin-right: 50px;
+	}
+	.right {
+		.sidebar {
+			width: 320px;
+			position: relative;
+			.profile {
+				height: 350px;
+				background-color: lightcoral;
+			}
+			.tags {
+				height: 350px;
+				background-color: lightyellow;
+			}
+			.series {
+				height: 350px;
+				background-color: lightgray;
+			}
+		}
+	}
+}
+
+//* 媒体查询：宽度：800+320+50 = 1170
+@media screen and (max-width: 1200px) {
+	.blog {
+		.left {
+			margin-right: 0;
+		}
+		.right {
+			.sidebar {
+				display: none;
+			}
+		}
+	}
+}

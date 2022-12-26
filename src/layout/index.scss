@@ -1,18 +1,20 @@
-$navbarHeight: 60px;
-$pageFootHeight: 250px;
+@import "../styles/variables.scss";
+
 .layout {
 	min-height: 100%;
+	scroll-behavior: smooth;
+	position: relative; //为绝对属性兜底，将样式的作用域限定在layout内部
 	.navbar {
 		height: $navbarHeight;
-		background-color: whitesmoke;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		border-bottom: $tickLine;
 		// .nav-left{}
 		// .nav-center{}
 		.nav-right {
 			display: flex;
-			padding-right: 20px;
+			padding-right: 25px;
 			.nav-item {
 				position: relative;
 				height: 100%;
@@ -20,14 +22,11 @@ $pageFootHeight: 250px;
 				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-				padding-left: 15px;
-				padding-right: 15px;
+				padding-left: 12px;
+				padding-right: 12px;
 				text-decoration: none;
 				transition: all 0.1s ease;
-				&:active {
-					transform: translateY(2px);
-					color: inherit;
-				}
+				color: black;
 				&:hover {
 					.nav-underline {
 						width: 100%;
@@ -37,8 +36,8 @@ $pageFootHeight: 250px;
 					width: 0;
 					border-bottom: 2px rgb(40, 40, 40) solid;
 					position: relative;
-					top: 3px;
-					transition: all 0.2s ease;
+					top: 4px;
+					transition: all 0.3s ease;
 				}
 			}
 			.router-link-active {
@@ -54,5 +53,19 @@ $pageFootHeight: 250px;
 	.page-foot {
 		height: $pageFootHeight;
 		background-color: whitesmoke;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		p {
+			margin-right: 20px;
+			font-size: 15px;
+			color: gray;
+		}
+		a {
+			text-decoration: none;
+			font-size: 14px;
+			color: gray;
+		}
 	}
 }

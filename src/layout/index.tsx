@@ -26,7 +26,12 @@ function Layout() {
 			<div className="outlet-main">
 				<Outlet />
 			</div>
-			<div className="page-foot"></div>
+			<div className="page-foot">
+				<p>Copyright © 2022 Aiysosis. All rights reserved.</p>
+				<a href="https://beian.miit.gov.cn/" target="_blank">
+					桂ICP备2022007029号
+				</a>
+			</div>
 		</div>
 	);
 }

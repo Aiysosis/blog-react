@@ -2,7 +2,10 @@ import service from "../config/axios";
 import { Blog, BlogDetail } from "../../types/data";
 
 export const getList = (skip: number) => {
-	return service<Blog[]>({
+	return service<{
+		blogs: Blog[];
+		count: number;
+	}>({
 		url: `/blogs/all/${skip}`,
 		method: "get",
 	});
