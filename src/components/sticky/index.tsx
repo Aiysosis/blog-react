@@ -45,13 +45,14 @@ export function Sticky({ children }) {
 
 	useEffect(() => {
 		//* set up event listeners
+		const root = document.getElementById("root");
 		events.forEach(e => {
-			window.addEventListener(e, handler);
-		});
+			root.addEventListener(e, handler);
+		}, []);
 		return () => {
 			//* clean up event listeners
 			events.forEach(e => {
-				window.removeEventListener(e, handler);
+				root.removeEventListener(e, handler);
 			});
 		};
 	});

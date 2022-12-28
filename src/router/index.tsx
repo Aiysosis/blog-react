@@ -1,8 +1,11 @@
+import React, { Suspense } from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
+import { Loading } from "../pages/loading";
 import Layout from "../layout";
-import BlogPage from "../pages/blog";
-import HomePage from "../pages/home";
-import SeriePage from "../pages/series";
+
+const BlogPage = React.lazy(() => import("../pages/blog"));
+const HomePage = React.lazy(() => import("../pages/home"));
+const SeriePage = React.lazy(() => import("../pages/series"));
 
 export const routes: RouteObject[] = [
 	{
@@ -10,15 +13,27 @@ export const routes: RouteObject[] = [
 		children: [
 			{
 				path: "/",
-				element: <BlogPage />,
+				element: (
+					<Suspense fallback={<Loading />}>
+						<BlogPage />
+					</Suspense>
+				),
 			},
 			{
 				path: "/home",
-				element: <HomePage />,
+				element: (
+					<Suspense fallback={<Loading />}>
+						<HomePage />
+					</Suspense>
+				),
 			},
 			{
 				path: "/series",
-				element: <SeriePage />,
+				element: (
+					<Suspense fallback={<Loading />}>
+						<SeriePage />
+					</Suspense>
+				),
 			},
 		],
 	},

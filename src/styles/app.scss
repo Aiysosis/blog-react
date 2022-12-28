@@ -12,6 +12,13 @@ body {
 	padding: 0;
 }
 
+#root {
+	height: 100vh;
+	overflow: scroll;
+	scroll-behavior: smooth;
+	position: relative; //为绝对属性兜底，将样式的作用域限定在root内部
+}
+
 * {
 	box-sizing: border-box;
 	scrollbar-width: thin;

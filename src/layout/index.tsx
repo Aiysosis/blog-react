@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { LinkProps, Outlet } from "react-router-dom";
+import { Loading } from "../pages/loading";
 import { CustomLink } from "./customLink";
 import "./index.scss";
 
@@ -24,7 +26,9 @@ function Layout() {
 				</div>
 			</div>
 			<div className="outlet-main">
-				<Outlet />
+				<Suspense fallback={<Loading />}>
+					<Outlet />
+				</Suspense>
 			</div>
 			<div className="page-foot">
 				<p>Copyright © 2022 Aiysosis. All rights reserved.</p>

@@ -19,7 +19,7 @@ export function BlogCard(props: { blog: Blog }) {
 			<div className="date">{blog.publishedTime}</div>
 			<Tags tags={blog.tags} />
 			<div className="info">{blog.description}</div>
-			<div className="saparator-container">
+			<div className="separator-container">
 				<div className="separator"></div>
 			</div>
 		</div>

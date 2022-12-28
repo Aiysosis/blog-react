@@ -18,15 +18,15 @@
 			width: 320px;
 			position: relative;
 			.profile {
-				height: 350px;
+				height: 300px;
 				background-color: lightcoral;
 			}
 			.tags {
-				height: 350px;
+				height: 300px;
 				background-color: lightyellow;
 			}
 			.series {
-				height: 350px;
+				height: 300px;
 				background-color: lightgray;
 			}
 		}
@@ -38,6 +38,25 @@
 	.blog {
 		.left {
 			margin-right: 0;
+		}
+		.right {
+			.sidebar {
+				display: none;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 900px) {
+	.blog {
+		.left {
+			margin-right: 0;
+			padding-left: 50px;
+			padding-right: 50px;
+			min-width: 550px;
+			.blog-list {
+				width: 100%;
+			}
 		}
 		.right {
 			.sidebar {

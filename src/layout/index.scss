@@ -1,9 +1,8 @@
 @import "../styles/variables.scss";
 
 .layout {
-	min-height: 100%;
-	scroll-behavior: smooth;
-	position: relative; //为绝对属性兜底，将样式的作用域限定在layout内部
+	height: 100%;
+
 	.navbar {
 		height: $navbarHeight;
 		display: flex;
@@ -49,6 +48,7 @@
 	}
 	.outlet-main {
 		min-height: calc(100vh - $navbarHeight);
+		position: relative;
 	}
 	.page-foot {
 		height: $pageFootHeight;
