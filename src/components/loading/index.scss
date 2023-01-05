@@ -1,0 +1,45 @@
+@import "../../styles/variables.scss";
+
+.loading-component {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: white;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	z-index: 999;
+	.box {
+		.dot {
+			width: 20px;
+			height: 20px;
+			background-color: #3ac;
+			border-radius: 100%;
+			display: inline-block;
+			animation: slide 1s infinite;
+		}
+	}
+}
+
+@for $i from 1 through 5 {
+	.box > .dot:nth-child(#{$i}) {
+		animation-delay: 0.1s * $i;
+		background-color: rgb(calc(51 + 50 * $i), 170, 204);
+	}
+}
+
+@keyframes slide {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.3;
+		transform: scale(2);
+	}
+	100% {
+		transform: scale(1);
+	}
+}

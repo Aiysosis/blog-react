@@ -2,14 +2,14 @@ import { Serie, SerieDetail } from "../../types/data";
 import service from "../config/axios";
 
 export const getList = () => {
-	return service<Serie>({
+	return service<Serie[]>({
 		url: "/series",
 		method: "get",
 	});
 };
 
 export const getRecommandSeries = () => {
-	return service({
+	return service<Serie[]>({
 		url: "/series/recommand",
 		method: "get",
 	});

@@ -10,6 +10,18 @@
 	.left {
 		.blog-list {
 			width: 800px;
+			padding-bottom: 50px;
+			.loading {
+				height: 200px;
+				position: relative;
+			}
+			.no-more {
+				height: 80px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: gray;
+			}
 		}
 		margin-right: 50px;
 	}
@@ -17,17 +29,62 @@
 		.sidebar {
 			width: 320px;
 			position: relative;
-			.profile {
-				height: 300px;
-				background-color: lightcoral;
+			.side-section-title {
+				user-select: none;
+				font-size: 20px;
+				font-family: SimSun;
+				font-weight: 500;
+				padding: 10px 0px;
+				border-bottom: 1px solid rgb(230, 229, 229);
+				position: relative;
+			}
+			.side-section-main {
+				font-size: 13px;
+				padding: 20px 0px;
+				font-weight: 400;
+				color: gray;
+				letter-spacing: 1.2px;
+				text-align: justify;
+				padding-top: 20px;
 			}
 			.tags {
-				height: 300px;
-				background-color: lightyellow;
-			}
-			.series {
-				height: 300px;
-				background-color: lightgray;
+				.side-tags-title {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					.show-all {
+					}
+				}
+				.side-tags-main {
+					min-height: 50px;
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+					padding-top: 20px;
+					input[type="checkbox"] {
+						position: absolute;
+						clip: rect(0, 0, 0, 0);
+						&:checked + .side-single-tag {
+							background-color: $themeColor;
+							color: white;
+						}
+					}
+					.side-single-tag {
+						margin: 5px 6px;
+						height: 30px;
+						padding: 0 10px;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						font-size: 14px;
+						font-weight: 400;
+						border-radius: 5px;
+						border: 1px solid $themeColor;
+						color: $themeColor;
+						cursor: pointer;
+					}
+				}
 			}
 		}
 	}
