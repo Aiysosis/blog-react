@@ -13,7 +13,7 @@ type SingleTagProps = Tag;
 function SingleTag(props: SingleTagProps) {
 	return (
 		<div>
-			<input type="checkbox" id={props.id.toString()} />
+			<input type="checkbox" value={props.id} id={props.id.toString()} />
 			<label
 				htmlFor={props.id.toString()}
 				className="side-single-tag"
@@ -22,19 +22,24 @@ function SingleTag(props: SingleTagProps) {
 	);
 }
 
-function FetchTags() {
+type FetchTagsProps = {
+	fetchAll: boolean;
+};
+
+export function FetchTags(props: FetchTagsProps) {
 	const [state, setState] = useState<TagsState>({
 		list: [],
 		loading: true,
 	});
 
 	const dataFetch = () => {
-		API.tags
-			.getRecommandTags()
+		const promise = props.fetchAll
+			? API.tags.getTags()
+			: API.tags.getRecommandTags();
+
+		promise
 			.then(res => {
 				if (res) {
-					console.log(res.data);
-
 					setState(state => {
 						return {
 							...state,
@@ -81,15 +86,19 @@ function FetchTags() {
 	);
 }
 
-export function Tags() {
+type TagsProps = {
+	showAllTags: () => void;
+};
+
+export function Tags(props: TagsProps) {
 	return (
 		<div className="tags">
 			<div className="side-section-title side-tags-title">
 				Tags
-				<div className="show-all"></div>
+				<div className="show-all" onClick={props.showAllTags}></div>
 			</div>
 			<div className="side-tags-main">
-				<FetchTags />
+				<FetchTags fetchAll={false} />
 			</div>
 		</div>
 	);

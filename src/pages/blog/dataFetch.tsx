@@ -124,7 +124,7 @@ function initScrollListener(loadMore: Function) {
 	const scrollListener = () => {
 		const { clientHeight, scrollTop, scrollHeight } = root;
 
-		if (clientHeight + scrollTop >= scrollHeight - 50) {
+		if (clientHeight + scrollTop >= scrollHeight - 150) {
 			// console.log("竖向滚动条已经滚动到底部");
 			loadMore();
 		}

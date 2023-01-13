@@ -64,9 +64,9 @@ function FetchSeries() {
 export function Series() {
 	return (
 		<div className="series">
-			<div className="side-section-title side-series">
+			<div className="side-section-title side-series-title">
 				Series
-				<div className="show-all"></div>
+				{/* <div className="show-all"></div> */}
 			</div>
 			<div className="side-series-main">
 				<FetchSeries />

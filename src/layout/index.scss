@@ -1,8 +1,51 @@
 @import "../styles/variables.scss";
 
+// upshow
+.upshow-enter-active {
+	transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.27);
+}
+
+.upshow-exit-active {
+	transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.27);
+}
+
+.upshow-exit,
+.upshow-enter-done {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.upshow-enter,
+.upshow-exit-done {
+	opacity: 0;
+	transform: translateY(30px);
+}
+
+//page
+.page-enter {
+	opacity: 0;
+	transform: scale(1.1);
+}
+
+.page-enter-active {
+	opacity: 1;
+	transform: scale(1);
+	transition: opacity 300ms, transform 300ms;
+}
+
+.page-exit {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.page-exit-active {
+	opacity: 0;
+	transform: scale(0.9);
+	transition: opacity 300ms, transform 300ms;
+}
+
 .layout {
 	height: 100%;
-
 	.navbar {
 		height: $navbarHeight;
 		display: flex;
@@ -49,6 +92,49 @@
 	.outlet-main {
 		min-height: calc(100vh - $navbarHeight);
 		position: relative;
+	}
+	.right-bottom {
+		position: fixed;
+		right: 20px;
+		bottom: 15px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		.back-to-top {
+			width: 40px;
+			height: 40px;
+			border-radius: 5px;
+			background-image: url("../assets/icons/top.png");
+			background-size: cover;
+			background-position: center;
+			transition: all 0.3s ease;
+			&:hover {
+				transform: translateY(-8px);
+			}
+			&:not(.applied) {
+				display: none;
+			}
+		}
+		.settings {
+			margin-top: 1px;
+			width: 42px;
+			height: 42px;
+			border-radius: 8px;
+			background-image: url("../assets/icons/settings.png");
+			background-size: cover;
+			background-position: center;
+			transition: all 0.3s ease;
+			cursor: pointer;
+			&:hover {
+				transform: rotate(90deg);
+			}
+		}
+	}
+
+	#blog-top-anchor {
+		position: absolute;
+		top: 0;
 	}
 	.page-foot {
 		height: $pageFootHeight;

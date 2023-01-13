@@ -3,7 +3,9 @@ import { Series } from "./series";
 import BlogsFetch from "./dataFetch";
 
 import "./index.scss";
-import { Tags } from "./tags";
+import { FetchTags, Tags } from "./tags";
+import { useState } from "react";
+import { RightBar } from "../../components/rightBar";
 
 function BlogList() {
 	return (
@@ -26,8 +28,22 @@ function Profile() {
 }
 
 function BlogPage() {
+	const [show, setShow] = useState(false);
+	const showAllTags = () => setShow(true);
+	const closeAllTags = () => setShow(false);
 	return (
 		<div className="blog">
+			<RightBar
+				show={show}
+				closeFn={closeAllTags}
+				hasWrapper={false}
+				width={320}
+				title="All Tags"
+			>
+				<div className="side-tags-main">
+					<FetchTags fetchAll={true} />
+				</div>
+			</RightBar>
 			<div className="left">
 				<BlogList />
 			</div>
@@ -35,7 +51,7 @@ function BlogPage() {
 				<div className="sidebar">
 					<Profile />
 					<Sticky>
-						<Tags />
+						<Tags showAllTags={showAllTags} />
 						<Series />
 					</Sticky>
 				</div>
