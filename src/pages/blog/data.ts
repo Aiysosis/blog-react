@@ -1,8 +1,7 @@
-import { Fragment, useEffect, useRef, useState } from "react";
-import { LoadingComponent } from "../../components/loading";
+import { useEffect, useRef, useState } from "react";
 import API from "../../services";
 import { Blog } from "../../types/data";
-import { BlogCard } from "./blogCard";
+import { useRenderWatcher, useStateRef } from "../../utils/hooks";
 
 //* 总结一下数据获取过程中遇到的坑
 //* 1. useState 不是同步更新，想要在多个setState之间顺序运行，使用函数的方式更新
@@ -16,107 +15,96 @@ import { BlogCard } from "./blogCard";
 //todo 前端缓存
 type BlogsFetchState = {
 	list: Blog[];
-	num: number;
+	listBackup: Blog[];
+	maxNum: number;
 	loading: boolean;
 	hasMore: boolean;
+	hasError: boolean;
+	selectedTags: number[];
 };
 
-const initState: BlogsFetchState = {
+const initialState: BlogsFetchState = {
 	list: [],
-	num: 0,
+	listBackup: [],
+	maxNum: Number.MAX_SAFE_INTEGER,
 	loading: true,
 	hasMore: true,
+	hasError: false,
+	selectedTags: [],
 };
 
-const PAGE_SIZE = 5;
+export function useData() {
+	//思路 通过先改变num来触发 effect，从而重新获取
+	useRenderWatcher();
 
-export default function BlogsFetch() {
-	const [state, setState] = useState<BlogsFetchState>(initState);
+	const [state, setState] = useState(initialState);
+	const stateRef = useStateRef(state); //for function use
 	const lock = useRef(false);
-	const maxNum = useRef(0);
 
 	const loadMore = () => {
-		if (!lock.current && state.hasMore) {
-			// console.log("loadmore");
+		//! 当心闭包陷阱！ 这里的state永远是初始的state，所以要用useRef包裹起来
+		//! 错误写法 if(state...) 这里的state由于闭包永远不会改变
+		const { hasMore, list } = stateRef.current;
+
+		if (!lock.current && hasMore) {
 			lock.current = true;
-			setState(state => {
-				let nextNum = state.num + PAGE_SIZE;
-				if (nextNum < maxNum.current) {
-					//还有更多
-					return {
-						...state,
-						num: nextNum,
-						loading: true,
-						hasMore: true,
-					};
-				} else {
-					return {
-						...state,
-						num: nextNum,
-						loading: false,
-						hasMore: false,
-					};
-				}
-			});
+			fetchData(list.length);
 		}
 	};
 
-	const fetchData = () => {
+	const fetchData = (skip: number) => {
+		setState(state => {
+			return {
+				...state,
+				loading: true,
+			};
+		});
 		API.blogs
-			.getList(state.num)
+			.getList(skip)
 			.then(res => {
 				if (res) {
 					const list = res.data.blogs;
+					let maxNum = stateRef.current.maxNum; //闭包陷阱
 					if (res.data.count !== -1) {
-						maxNum.current = res.data.count;
+						maxNum = res.data.count;
 					}
 					setState(state => {
 						return {
 							...state,
 							list: [...state.list, ...list],
+							listBackup: [...state.list, ...list],
+							maxNum,
+							loading: false,
+							hasMore: state.list.length < maxNum,
+							hasError: false,
 						};
 					});
 				}
 			})
 			.catch(err => {
 				console.warn(err);
-			})
-			.finally(() => {
-				lock.current = false;
 				setState(state => {
 					return {
 						...state,
+						hasError: true,
 						loading: false,
 					};
 				});
+			})
+			.finally(() => {
+				lock.current = false;
 			});
 	};
 
 	initScrollListener(loadMore);
 
 	useEffect(() => {
-		//fetch data & load more
-		// console.log("fetch data");
-		fetchData();
-	}, [state.num]);
+		//init
+		fetchData(0);
+	}, []);
 
-	const element = state.list.map(blog => (
-		<BlogCard blog={blog} key={blog.id} />
-	));
-
-	return (
-		<Fragment>
-			{element}
-			{!state.hasMore ? (
-				<div className="no-more">没有更多了 ＜（＾－＾）＞</div>
-			) : null}
-			{state.loading ? (
-				<div className="loading">
-					<LoadingComponent />
-				</div>
-			) : null}
-		</Fragment>
-	);
+	//没有自定义名称的需求，所以这里使用对象
+	return { state, setState, stateRef };
 }
 
 function initScrollListener(loadMore: Function) {

@@ -1,19 +1,13 @@
 import { Sticky } from "../../components/sticky";
 import { Series } from "./series";
-import BlogsFetch from "./dataFetch";
+import { useData } from "./data";
 
 import "./index.scss";
 import { FetchTags, Tags } from "./tags";
 import { useState } from "react";
 import { RightBar } from "../../components/rightBar";
-
-function BlogList() {
-	return (
-		<div className="blog-list">
-			<BlogsFetch />
-		</div>
-	);
-}
+import { BlogCard } from "./blogCard";
+import { LoadingComponent } from "../../components/loading";
 
 function Profile() {
 	return (
@@ -27,15 +21,33 @@ function Profile() {
 	);
 }
 
+function useRightbar() {
+	const [rightbarState, setRightbarState] = useState(false);
+	const openRightbar = () => setRightbarState(true);
+	const closeRightbar = () => setRightbarState(false);
+
+	return {
+		rightbarState,
+		openRightbar,
+		closeRightbar,
+	};
+}
+
 function BlogPage() {
-	const [show, setShow] = useState(false);
-	const showAllTags = () => setShow(true);
-	const closeAllTags = () => setShow(false);
+	const { rightbarState, openRightbar, closeRightbar } = useRightbar();
+	const { state, setState, stateRef } = useData();
+
+	console.log(stateRef.current);
+
+	const element = stateRef.current.list.map(blog => (
+		<BlogCard blog={blog} key={blog.id} />
+	));
+
 	return (
 		<div className="blog">
 			<RightBar
-				show={show}
-				closeFn={closeAllTags}
+				show={rightbarState}
+				closeFn={closeRightbar}
 				hasWrapper={false}
 				width={320}
 				title="All Tags"
@@ -45,13 +57,23 @@ function BlogPage() {
 				</div>
 			</RightBar>
 			<div className="left">
-				<BlogList />
+				<div className="blog-list">
+					{element}
+					{!state.hasMore ? (
+						<div className="no-more">没有更多了 ＜（＾－＾）＞</div>
+					) : null}
+					{state.loading ? (
+						<div className="loading">
+							<LoadingComponent />
+						</div>
+					) : null}
+				</div>
 			</div>
 			<div className="right">
 				<div className="sidebar">
 					<Profile />
 					<Sticky>
-						<Tags showAllTags={showAllTags} />
+						<Tags showAllTags={openRightbar} />
 						<Series />
 					</Sticky>
 				</div>
