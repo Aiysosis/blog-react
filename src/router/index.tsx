@@ -6,6 +6,7 @@ import Layout from "../layout";
 const BlogPage = React.lazy(() => import("../pages/blog"));
 const HomePage = React.lazy(() => import("../pages/home"));
 const SeriePage = React.lazy(() => import("../pages/series"));
+const BlogDetail = React.lazy(() => import("../pages/blogDetail"));
 
 export const routes: RouteObject[] = [
 	{
@@ -16,6 +17,14 @@ export const routes: RouteObject[] = [
 				element: (
 					<Suspense fallback={<Loading />}>
 						<BlogPage />
+					</Suspense>
+				),
+			},
+			{
+				path: "/blogdetail/:id",
+				element: (
+					<Suspense fallback={<Loading />}>
+						<BlogDetail />
 					</Suspense>
 				),
 			},

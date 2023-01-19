@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Blog, Tag } from "../../../types/data";
 import "./index.scss";
 
@@ -13,12 +14,15 @@ function Tags(props: { tags: Tag[] }) {
 
 export function BlogCard(props: { blog: Blog }) {
 	const { blog } = props;
+	const { title, publishedTime, tags, description, id } = blog;
+
 	return (
 		<div className="blog-card">
-			<div className="title">{blog.title}</div>
-			<div className="date">{blog.publishedTime}</div>
-			<Tags tags={blog.tags} />
-			<div className="info">{blog.description}</div>
+			<div className="title">{title}</div>
+			<div className="date">{publishedTime}</div>
+			<Tags tags={tags} />
+			<div className="info">{description}</div>
+			<Link to={`/blogdetail/${id}`}>start</Link>
 			<div className="separator-container">
 				<div className="separator"></div>
 			</div>

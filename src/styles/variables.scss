@@ -13,3 +13,8 @@ $themeColor: rgb(122, 67, 194);
 @function shadow($height, $blur) {
 	@return $height $height $blur #bebebe, -($height) - ($height) $blur #ffffff;
 }
+
+//markdown
+$sidebarWidth: 300px; //侧边栏宽度
+$headHeight: 300px; //页头高度
+$footHeight: 200px; //页脚高度
