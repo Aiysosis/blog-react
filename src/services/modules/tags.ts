@@ -16,7 +16,7 @@ export const getRecommandTags = () => {
 	});
 };
 
-export const getTagsByIds = (data: Array<number>) => {
+export const searchByTags = (data: Array<number>) => {
 	const postData = {
 		tags: data,
 	};

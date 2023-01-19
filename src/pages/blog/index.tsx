@@ -1,13 +1,13 @@
-import { Sticky } from "../../components/sticky";
-import { Series } from "./series";
-import { useData } from "./data";
-
 import "./index.scss";
-import { FetchTags, Tags } from "./tags";
-import { useState } from "react";
-import { RightBar } from "../../components/rightBar";
+
+import { Sticky } from "../../components/sticky";
+import { Series } from "./series/index";
+import { useData } from "./data";
 import { BlogCard } from "./blogCard";
 import { LoadingComponent } from "../../components/loading";
+import { Tags, TagsList } from "./tags";
+import { useRightbar } from "./tags/rightbar";
+import { AllTags } from "./tags/allTags";
 
 function Profile() {
 	return (
@@ -21,41 +21,26 @@ function Profile() {
 	);
 }
 
-function useRightbar() {
-	const [rightbarState, setRightbarState] = useState(false);
-	const openRightbar = () => setRightbarState(true);
-	const closeRightbar = () => setRightbarState(false);
-
-	return {
-		rightbarState,
-		openRightbar,
-		closeRightbar,
-	};
-}
-
 function BlogPage() {
+	//* 不要在这里写基本逻辑，只保留调度逻辑和jsx
 	const { rightbarState, openRightbar, closeRightbar } = useRightbar();
-	const { state, setState, stateRef } = useData();
+	const { state, setList, resetList, tagsSearchLoading, needResetList } =
+		useData();
 
-	console.log(stateRef.current);
-
-	const element = stateRef.current.list.map(blog => (
+	const element = state.list.map(blog => (
 		<BlogCard blog={blog} key={blog.id} />
 	));
 
 	return (
 		<div className="blog">
-			<RightBar
-				show={rightbarState}
-				closeFn={closeRightbar}
-				hasWrapper={false}
-				width={320}
-				title="All Tags"
-			>
-				<div className="side-tags-main">
-					<FetchTags fetchAll={true} />
-				</div>
-			</RightBar>
+			<AllTags
+				setBlogList={setList}
+				setLoading={tagsSearchLoading}
+				resetBlogList={resetList}
+				needResetList={needResetList}
+				rightbarState={rightbarState}
+				closeRightbar={closeRightbar}
+			/>
 			<div className="left">
 				<div className="blog-list">
 					{element}
@@ -73,7 +58,13 @@ function BlogPage() {
 				<div className="sidebar">
 					<Profile />
 					<Sticky>
-						<Tags showAllTags={openRightbar} />
+						<Tags
+							showAllTags={openRightbar}
+							setBlogList={setList}
+							resetBlogList={resetList}
+							setLoading={tagsSearchLoading}
+							needResetList={needResetList}
+						/>
 						<Series />
 					</Sticky>
 				</div>

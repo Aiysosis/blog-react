@@ -1,83 +1,53 @@
 import { Fragment, useEffect, useState } from "react";
 import { LoadingComponent } from "../../../components/loading";
-import API from "../../../services";
-import { Tag } from "../../../types/data";
+import { Blog, Tag } from "../../../types/data";
+import { TagsState, useTagsData } from "./tags";
 
-interface TagsState {
-	list: Tag[];
-	loading: boolean;
-}
-
-type SingleTagProps = Tag;
-
-function SingleTag(props: SingleTagProps) {
-	return (
-		<div>
-			<input type="checkbox" value={props.id} id={props.id.toString()} />
-			<label
-				htmlFor={props.id.toString()}
-				className="side-single-tag"
-			>{`${props.tagName}(${props.count})`}</label>
-		</div>
-	);
-}
-
-type FetchTagsProps = {
+type TagsListProps = {
 	fetchAll: boolean;
+	tagsState: TagsState;
+	// setBlogList: (list: Blog[]) => void;
+	// setLoading: () => void;
+	// resetBlogList: () => void;
+	// needResetList: () => boolean;
+	fetchData: (fetchAll: boolean) => void;
+	handleSelectChange: (id: number) => void;
 };
 
-export function FetchTags(props: FetchTagsProps) {
-	const [state, setState] = useState<TagsState>({
-		list: [],
-		loading: true,
-	});
+export function TagsList(props: TagsListProps) {
+	const { fetchAll, tagsState, fetchData, handleSelectChange } = props;
 
-	const dataFetch = () => {
-		const promise = props.fetchAll
-			? API.tags.getTags()
-			: API.tags.getRecommandTags();
-
-		promise
-			.then(res => {
-				if (res) {
-					setState(state => {
-						return {
-							...state,
-							list: res.data,
-						};
-					});
-				}
-			})
-			.catch(err => {
-				console.warn(err);
-			})
-			.finally(() => {
-				setState(state => {
-					return {
-						...state,
-						loading: false,
-					};
-				});
-			});
-	};
+	const { tags, selected, loading } = tagsState;
 
 	useEffect(() => {
-		dataFetch();
+		fetchData(fetchAll);
 	}, []);
 
-	const tags = state.list.map(tag => (
-		<SingleTag
-			id={tag.id}
-			tagName={tag.tagName}
-			count={tag.count}
-			key={tag.id}
-		/>
-	));
+	const tagsElement = tags.map(tag => {
+		const { id, tagName, count } = tag;
+		return (
+			<div key={id}>
+				<input
+					type="checkbox"
+					value={id}
+					id={id.toString()}
+					checked={selected[id]}
+					onChange={() => {
+						handleSelectChange(id);
+					}}
+				/>
+				<label
+					htmlFor={id.toString()}
+					className="side-single-tag"
+				>{`${tagName}(${count})`}</label>
+			</div>
+		);
+	});
 
 	return (
 		<Fragment>
-			{tags}
-			{state.loading ? (
+			{tagsElement}
+			{loading ? (
 				<div className="loading">
 					<LoadingComponent />
 				</div>
@@ -86,19 +56,50 @@ export function FetchTags(props: FetchTagsProps) {
 	);
 }
 
-type TagsProps = {
+export type TagsProps = {
 	showAllTags: () => void;
+	setBlogList: (list: Blog[]) => void;
+	setLoading: () => void;
+	resetBlogList: () => void;
+	needResetList: () => boolean;
 };
 
 export function Tags(props: TagsProps) {
+	const {
+		setBlogList,
+		resetBlogList,
+		setLoading,
+		needResetList,
+		showAllTags,
+	} = props;
+
+	const {
+		tagsState,
+		tagsStateRef,
+		fetchData,
+		resetSelectedTags,
+		handleSelectChange,
+	} = useTagsData(setBlogList, resetBlogList, setLoading, needResetList);
+
 	return (
 		<div className="tags">
 			<div className="side-section-title side-tags-title">
 				Tags
-				<div className="show-all" onClick={props.showAllTags}></div>
+				<div
+					className="show-all"
+					onClick={() => {
+						showAllTags();
+						resetSelectedTags();
+					}}
+				></div>
 			</div>
 			<div className="side-tags-main">
-				<FetchTags fetchAll={false} />
+				<TagsList
+					fetchAll={false}
+					tagsState={tagsState}
+					fetchData={fetchData}
+					handleSelectChange={handleSelectChange}
+				/>
 			</div>
 		</div>
 	);

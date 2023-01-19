@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import API from "../../services";
 import { Blog } from "../../types/data";
+import { UseStateReturn } from "../../types/util";
 import { useRenderWatcher, useStateRef } from "../../utils/hooks";
 
 //* 总结一下数据获取过程中遇到的坑
@@ -13,7 +14,7 @@ import { useRenderWatcher, useStateRef } from "../../utils/hooks";
 //* 判断没有更多数据
 //todo 列表动画
 //todo 前端缓存
-type BlogsFetchState = {
+export type BlogsState = {
 	list: Blog[];
 	listBackup: Blog[];
 	maxNum: number;
@@ -21,9 +22,10 @@ type BlogsFetchState = {
 	hasMore: boolean;
 	hasError: boolean;
 	selectedTags: number[];
+	needReset: boolean;
 };
 
-const initialState: BlogsFetchState = {
+const initialState: BlogsState = {
 	list: [],
 	listBackup: [],
 	maxNum: Number.MAX_SAFE_INTEGER,
@@ -31,6 +33,7 @@ const initialState: BlogsFetchState = {
 	hasMore: true,
 	hasError: false,
 	selectedTags: [],
+	needReset: false,
 };
 
 export function useData() {
@@ -50,6 +53,46 @@ export function useData() {
 			lock.current = true;
 			fetchData(list.length);
 		}
+	};
+
+	const setList = (list: Blog[]) => {
+		setState(state => {
+			return {
+				...state,
+				list,
+				hasMore: false,
+				loading: false,
+				needReset: true,
+			};
+		});
+	};
+
+	const tagsSearchLoading = () => {
+		console.log("set loading");
+		setState(state => {
+			return {
+				...state,
+				list: [],
+				hasMore: true,
+				loading: true,
+			};
+		});
+	};
+
+	const resetList = () => {
+		setState(state => {
+			const { listBackup, maxNum } = state;
+			return {
+				...state,
+				list: listBackup,
+				hasMore: listBackup.length < maxNum,
+				needReset: false,
+			};
+		});
+	};
+
+	const needResetList = () => {
+		return stateRef.current.needReset;
 	};
 
 	const fetchData = (skip: number) => {
@@ -104,7 +147,16 @@ export function useData() {
 	}, []);
 
 	//没有自定义名称的需求，所以这里使用对象
-	return { state, setState, stateRef };
+	//use your imagnation
+	return {
+		state,
+		setState,
+		stateRef,
+		setList,
+		resetList,
+		tagsSearchLoading,
+		needResetList,
+	};
 }
 
 function initScrollListener(loadMore: Function) {
