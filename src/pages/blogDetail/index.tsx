@@ -6,6 +6,7 @@ import { useData } from "./data";
 
 import "./index.scss";
 import "../../styles/markdown.scss";
+import { Link } from "react-router-dom";
 
 function BlogDetail() {
 	const { state } = useData();
@@ -14,7 +15,6 @@ function BlogDetail() {
 
 	useEffect(() => {
 		if (state.content !== "") {
-			console.log(state.content);
 			(mnt.current as HTMLElement).innerHTML = state.content;
 		}
 	}, [state.content]);
@@ -29,10 +29,10 @@ function BlogDetail() {
 		const { coverSmall, title, publishedTime } = state.blogDetail;
 		return (
 			<div className="blog-detail">
-				<div className="back-wrapper">
+				<Link to={"/"} className="back-wrapper">
 					<div className="back"></div>
 					<div className="back-text">Back</div>
-				</div>
+				</Link>
 
 				<div className="blog-head">
 					<img

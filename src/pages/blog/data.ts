@@ -68,7 +68,6 @@ export function useData() {
 	};
 
 	const tagsSearchLoading = () => {
-		console.log("set loading");
 		setState(state => {
 			return {
 				...state,
@@ -160,7 +159,7 @@ export function useData() {
 }
 
 function initScrollListener(loadMore: Function) {
-	const root = document.getElementById("root");
+	const root = document.getElementById("scroll-container");
 	const scrollListener = () => {
 		const { clientHeight, scrollTop, scrollHeight } = root;
 

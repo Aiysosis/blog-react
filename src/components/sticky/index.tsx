@@ -6,7 +6,12 @@ type StickyState = {
 	height: number;
 };
 
-export function Sticky({ children }) {
+type StickyProps = {
+	stickyTop: number;
+	children?: React.ReactNode;
+};
+
+export function Sticky(props: StickyProps) {
 	const container = createRef<HTMLDivElement>();
 	const placeholder = createRef<HTMLDivElement>();
 	const events = ["scroll", "resize"];
@@ -21,7 +26,7 @@ export function Sticky({ children }) {
 		const { top, height } = container.current.getBoundingClientRect();
 		const { width } = placeholder.current.getBoundingClientRect();
 
-		if (top > 0) {
+		if (top > props.stickyTop) {
 			//* 此时处于正常文档流
 			setState({
 				style: {
@@ -34,7 +39,7 @@ export function Sticky({ children }) {
 			setState({
 				style: {
 					position: "fixed",
-					top: "0",
+					top: `${props.stickyTop}px`,
 					width,
 					...hardwareAcceleration,
 				},
@@ -45,7 +50,7 @@ export function Sticky({ children }) {
 
 	useEffect(() => {
 		//* set up event listeners
-		const root = document.getElementById("root");
+		const root = document.getElementById("scroll-container");
 		events.forEach(e => {
 			root.addEventListener(e, handler);
 		}, []);
@@ -63,7 +68,7 @@ export function Sticky({ children }) {
 				ref={placeholder}
 				style={{ height: state.height, zIndex: -1 }}
 			></div>
-			<div style={state.style}>{children}</div>
+			<div style={state.style}>{props.children}</div>
 		</div>
 	);
 }

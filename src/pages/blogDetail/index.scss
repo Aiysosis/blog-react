@@ -20,9 +20,11 @@
 		align-items: center;
 		transition: all 0.3s ease;
 		animation: opacity-show 0.3s ease;
+		text-decoration: none;
 		&:hover {
 			transform: translateX(-3px);
 		}
+
 		.back {
 			width: 22px;
 			height: 22px;
@@ -41,6 +43,7 @@
 			cursor: pointer;
 		}
 	}
+
 	.blog-head {
 		position: absolute;
 		width: calc(100% - $sidebarWidth);

@@ -5,9 +5,10 @@ import { Series } from "./series/index";
 import { useData } from "./data";
 import { BlogCard } from "./blogCard";
 import { LoadingComponent } from "../../components/loading";
-import { Tags, TagsList } from "./tags";
+import { Tags } from "./tags";
 import { useRightbar } from "./tags/rightbar";
 import { AllTags } from "./tags/allTags";
+import { CSSTransition } from "react-transition-group";
 
 function Profile() {
 	return (
@@ -24,11 +25,43 @@ function Profile() {
 function BlogPage() {
 	//* 不要在这里写基本逻辑，只保留调度逻辑和jsx
 	const { rightbarState, openRightbar, closeRightbar } = useRightbar();
-	const { state, setList, resetList, tagsSearchLoading, needResetList } =
-		useData();
+	const {
+		state,
+		setList,
+		resetList,
+		tagsSearchLoading,
+		needResetList,
+		stateRef,
+	} = useData();
 
-	const element = state.list.map(blog => (
-		<BlogCard blog={blog} key={blog.id} />
+	const onEnter = (node: HTMLElement) => {
+		node.style.opacity = "0";
+	};
+
+	const onEntering = (index: number) => {
+		//使闭包存储 index
+		const { list } = stateRef.current;
+
+		return (node: HTMLElement) => {
+			const delay = (index - list.length) * 100;
+			setTimeout(() => {
+				node.style.opacity = "1";
+				node.style.animation = "one-in 0.5s ease";
+			}, delay);
+		};
+	};
+
+	const element = state.list.map((blog, index) => (
+		<CSSTransition
+			in={true}
+			timeout={0}
+			appear={true}
+			key={blog.id}
+			onEnter={onEnter as any}
+			onEntering={onEntering(index) as any}
+		>
+			<BlogCard blog={blog} />
+		</CSSTransition>
 	));
 
 	return (
@@ -57,7 +90,7 @@ function BlogPage() {
 			<div className="right">
 				<div className="sidebar">
 					<Profile />
-					<Sticky>
+					<Sticky stickyTop={60}>
 						<Tags
 							showAllTags={openRightbar}
 							setBlogList={setList}
