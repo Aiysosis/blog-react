@@ -1,0 +1,105 @@
+@import "../../../styles/variables.scss";
+.serie-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	margin: 30px 20px;
+	&:hover {
+		.img-wrapper {
+			.pic {
+				transform: scale(1.1);
+			}
+		}
+	}
+	.img-wrapper {
+		width: 400px;
+		height: 240px;
+		overflow: hidden;
+		position: relative;
+		user-select: none;
+		cursor: pointer;
+		.state {
+			position: absolute;
+			user-select: none;
+			top: 5px;
+			left: 5px;
+			padding: 5px 10px;
+			border-radius: 5px;
+			font-size: 13px;
+			z-index: 10;
+		}
+		.active {
+			background-color: $themeColor;
+			color: white;
+		}
+		.finished {
+			background-color: rgb(83, 188, 223);
+			color: white;
+		}
+		.pic {
+			width: 100%;
+			height: 100%;
+			background-color: whitesmoke;
+			object-fit: cover;
+			transition: all 0.8s ease;
+			position: relative;
+			z-index: 5;
+		}
+
+		.loading {
+			background-color: whitesmoke;
+			z-index: 3;
+		}
+	}
+	.card-main {
+		padding: 20px 0;
+		width: 400px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+		.name {
+			user-select: none;
+			font-size: 20px;
+			position: relative;
+			cursor: pointer;
+			user-select: none;
+			&:hover {
+				.underline {
+					width: 100%;
+				}
+			}
+			.underline {
+				position: absolute;
+				left: 0;
+				bottom: -5px;
+				width: 0;
+				height: 0;
+				border-bottom: 1.8px black solid;
+				transition: all 0.3s ease;
+			}
+		}
+		.time {
+			width: fit-content;
+			margin-top: 10px;
+			font-size: 13px;
+			color: gray;
+			user-select: none;
+		}
+		.discription {
+			margin-top: 10px;
+			width: 100%;
+			font-size: 13px;
+			color: gray;
+			letter-spacing: 1px;
+			line-height: 18px;
+			max-height: 36px;
+			overflow: hidden;
+			position: relative;
+			padding-right: 5px;
+			user-select: none;
+			text-align: justify;
+		}
+	}
+}

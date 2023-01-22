@@ -1,0 +1,138 @@
+@import "../../styles/variables.scss";
+
+.serie-detail {
+	.back-wrapper {
+		position: fixed;
+		left: 0;
+		top: 0;
+		height: $navbarHeight;
+		padding: 0 15px;
+		z-index: 999;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		transition: all 0.3s ease;
+		animation: opacity-show 0.3s ease;
+		&:hover {
+			transform: translateX(-3px);
+		}
+		.back {
+			width: 22px;
+			height: 22px;
+			background-image: url("../../assets/icons/left.png");
+			background-size: cover;
+			background-position: center;
+			margin-right: 5px;
+			transition: all 0.3s ease;
+			cursor: pointer;
+		}
+		.back-text {
+			color: $themeColor;
+			font-size: 16px;
+			user-select: none;
+			transition: all 0.3s ease;
+			cursor: pointer;
+		}
+	}
+	.head {
+		width: 100%;
+		height: 300px;
+		animation: slideDown 0.5s ease;
+		position: relative;
+		margin-bottom: 80px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.pic {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: center;
+			position: absolute;
+		}
+		.head-filter {
+			position: absolute;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 0;
+			backdrop-filter: brightness(80%) blur(4px);
+		}
+		.head-main {
+			position: relative;
+			z-index: 5;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			user-select: none;
+			.serie-title {
+				font-size: 30px;
+				color: white;
+				letter-spacing: 4px;
+			}
+			.serie-time {
+				font-size: 16px;
+				color: white;
+				letter-spacing: 2px;
+				margin-top: 20px;
+			}
+		}
+	}
+
+	.main {
+		animation: slideUp 0.5s ease;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: flex-start;
+		min-width: calc($serie-blog-cardWidth + $serie-blog-sidebarWidth);
+		transition: all 0.3s ease;
+		.blogs-wrapper {
+			min-height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			min-width: calc($serie-blog-cardWidth + 200px);
+			position: relative;
+		}
+		.sidebar {
+			width: $serie-blog-sidebarWidth;
+			flex-shrink: 0;
+			height: 800px;
+			transition: all 0.3s ease;
+			padding-right: 25px;
+			.sidebar-section {
+				.side-section-title {
+					user-select: none;
+					font-size: 20px;
+					font-family: SimSun;
+					font-weight: 500;
+					padding: 10px 0px;
+					border-bottom: 1px solid rgb(230, 229, 229);
+					position: relative;
+				}
+				.side-section-main {
+					font-size: 13px;
+					padding: 20px 0px;
+					font-weight: 400;
+					color: gray;
+					letter-spacing: 1.2px;
+					text-align: justify;
+				}
+
+				.outline {
+					text-decoration: none;
+					margin-top: 10px;
+					font-size: 13px;
+					color: gray;
+					letter-spacing: 1.2px;
+					user-select: none;
+					transition: all 0.3s ease;
+					display: block;
+				}
+			}
+		}
+	}
+}

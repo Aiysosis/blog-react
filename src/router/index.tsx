@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import { Loading } from "../pages/loading";
 import Layout from "../layout";
+import { SerieDetail } from "../pages/serieDetail";
 
 const BlogPage = React.lazy(() => import("../pages/blog"));
 const HomePage = React.lazy(() => import("../pages/home"));
@@ -41,6 +42,14 @@ export const routes: RouteObject[] = [
 				element: (
 					<Suspense fallback={<Loading />}>
 						<SeriePage />
+					</Suspense>
+				),
+			},
+			{
+				path: "/seriedetail/:id",
+				element: (
+					<Suspense fallback={<Loading />}>
+						<SerieDetail />
 					</Suspense>
 				),
 			},
