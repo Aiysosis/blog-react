@@ -1,8 +1,8 @@
-import { Blog } from "../../../types/data";
-import { formatTime } from "../../../utils/time";
-import { getUrl } from "../../../utils/url";
+import { getUrl } from "@/utils/url";
+import { Blog } from "@/types/data";
+import { formatTime } from "@/utils/time";
 
-import "./index.scss";
+import style from "./index.module.scss";
 
 type SerieBlogCardProps = {
 	blog: Blog;
@@ -14,27 +14,29 @@ export function SerieBlogCard(props: SerieBlogCardProps) {
 	const { id, title, publishedTime, description, coverSmall } = blog;
 
 	return (
-		<div
-			className={`serie-blog-card ${
-				reverse ? "flex-reverse" : "flex-normal"
-			}`}
-		>
-			<a id={`blog${id}`} className="anchor" />
-			<div className="section-info">
-				<div
-					className={`main ${
-						reverse ? "main-reverse" : "main-normal"
-					}`}
-				>
-					<div className="title">{title}</div>
-					<div className="date">
-						{formatTime(publishedTime, "YYYY-MM-DD")}
+		<div className={style.wrapper}>
+			<div
+				className={`serie-blog-card ${
+					reverse ? "card-reverse" : "card-normal"
+				}`}
+			>
+				<a id={`blog${id}`} className="card-anchor" />
+				<div className="card-section-info">
+					<div
+						className={`card-main ${
+							reverse ? "card-main-reverse" : "card-main-normal"
+						}`}
+					>
+						<div className="card-title">{title}</div>
+						<div className="card-date">
+							{formatTime(publishedTime, "YYYY-MM-DD")}
+						</div>
+						<div className="card-discription">{description}</div>
 					</div>
-					<div className="discription">{description}</div>
 				</div>
-			</div>
-			<div className="section-pic">
-				<img src={getUrl(coverSmall)} alt="" className="pic" />
+				<div className="card-section-pic">
+					<img src={getUrl(coverSmall)} alt="" className="card-pic" />
+				</div>
 			</div>
 		</div>
 	);

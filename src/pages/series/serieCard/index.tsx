@@ -11,7 +11,7 @@ export function SerieCard(props: { serie: Serie }) {
 	const navigate = useNavigate();
 
 	const visitDetail = (id: number) => {
-		navigate(`/seriedetail/${id}`);
+		navigate(`/series/seriedetail/${id}`);
 	};
 
 	return (

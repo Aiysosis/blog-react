@@ -15,20 +15,26 @@ export const routes: RouteObject[] = [
 		children: [
 			{
 				path: "/",
-				element: (
-					<Suspense fallback={<Loading />}>
-						<BlogPage />
-					</Suspense>
-				),
+				children: [
+					{
+						index: true,
+						element: (
+							<Suspense fallback={<Loading />}>
+								<BlogPage />
+							</Suspense>
+						),
+					},
+					{
+						path: "blogdetail/:id",
+						element: (
+							<Suspense fallback={<Loading />}>
+								<BlogDetail />
+							</Suspense>
+						),
+					},
+				],
 			},
-			{
-				path: "/blogdetail/:id",
-				element: (
-					<Suspense fallback={<Loading />}>
-						<BlogDetail />
-					</Suspense>
-				),
-			},
+
 			{
 				path: "/home",
 				element: (
@@ -39,19 +45,24 @@ export const routes: RouteObject[] = [
 			},
 			{
 				path: "/series",
-				element: (
-					<Suspense fallback={<Loading />}>
-						<SeriePage />
-					</Suspense>
-				),
-			},
-			{
-				path: "/seriedetail/:id",
-				element: (
-					<Suspense fallback={<Loading />}>
-						<SerieDetail />
-					</Suspense>
-				),
+				children: [
+					{
+						index: true,
+						element: (
+							<Suspense fallback={<Loading />}>
+								<SeriePage />
+							</Suspense>
+						),
+					},
+					{
+						path: "seriedetail/:id",
+						element: (
+							<Suspense fallback={<Loading />}>
+								<SerieDetail />
+							</Suspense>
+						),
+					},
+				],
 			},
 		],
 	},
