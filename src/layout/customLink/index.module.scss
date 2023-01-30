@@ -1,0 +1,30 @@
+.navItem {
+	position: relative;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding-left: 12px;
+	padding-right: 12px;
+	text-decoration: none;
+	transition: all 0.1s ease;
+	color: black;
+	&:hover {
+		.underline {
+			width: 100%;
+		}
+	}
+	.underline {
+		width: 0;
+		border-bottom: 2px rgb(40, 40, 40) solid;
+		position: relative;
+		top: 4px;
+		transition: all 0.3s ease;
+	}
+}
+.active {
+	.underline {
+		width: 100%;
+	}
+}

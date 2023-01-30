@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import "./index.scss";
+import css from "./index.module.scss";
 
 type ScrollContainerProps = {
 	children?: React.ReactNode;
@@ -25,23 +25,28 @@ export function ScrollContainer(props: ScrollContainerProps) {
 		});
 	}, []);
 
+	const {
+		scrollContainer,
+		pageMain,
+		rightBottom,
+		backToTop,
+		settings,
+		pageFoot,
+	} = css;
 	return (
-		<div ref={ref} className="scroll-container" id="scroll-container">
-			<div className="page-main">
+		<div ref={ref} className={scrollContainer} id="scroll-container">
+			<div className={pageMain}>
 				<a href="#scroll-top-anchor" id="scroll-top-anchor"></a>
-				<div className="right-bottom">
+				<div className={rightBottom}>
 					<CSSTransition
 						in={!isTop}
 						timeout={300}
 						classNames="applied upshow"
 					>
-						<a
-							href="#scroll-top-anchor"
-							className="back-to-top"
-						></a>
+						<a href="#scroll-top-anchor" className={backToTop}></a>
 					</CSSTransition>
 					<div
-						className="settings"
+						className={settings}
 						onClick={() => {
 							openRightBar();
 						}}
@@ -49,7 +54,7 @@ export function ScrollContainer(props: ScrollContainerProps) {
 				</div>
 				{children}
 			</div>
-			<div className="page-foot">
+			<div className={pageFoot} id="page-foot">
 				<p>Copyright © 2022 Aiysosis. All rights reserved.</p>
 				<a href="https://beian.miit.gov.cn/" target="_blank">
 					桂ICP备2022007029号

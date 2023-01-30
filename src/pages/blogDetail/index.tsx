@@ -1,12 +1,12 @@
-import { useEffect, useRef } from "react";
-import { formatTime } from "../../utils/time";
-import { getUrl } from "../../utils/url";
+import { Fragment, useEffect, useRef } from "react";
+import { formatTime } from "@/utils/time";
+import { getUrl } from "@/utils/url";
 import { Loading } from "../loading";
 import { useData } from "./data";
-
-import "./index.scss";
-import "../../styles/markdown.scss";
 import { Link } from "react-router-dom";
+import "../../styles/markdown.scss";
+import "../../styles/prism-onedark.css";
+import "./index.scss";
 
 function BlogDetail() {
 	const { state } = useData();
@@ -18,6 +18,12 @@ function BlogDetail() {
 			(mnt.current as HTMLElement).innerHTML = state.content;
 		}
 	}, [state.content]);
+
+	//隐藏page-foot
+	useEffect(() => {
+		const pageFoot = document.getElementById("page-foot");
+		pageFoot.style.display = "none";
+	}, []);
 
 	if (state.loading) {
 		return (

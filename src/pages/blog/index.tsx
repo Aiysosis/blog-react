@@ -1,14 +1,14 @@
 import { Sticky } from "../../components/sticky";
 import { Series } from "./series/index";
 import { useData } from "./data";
-import { BlogCard } from "./blogCard";
+import BlogCard from "./blogCard";
 import { LoadingComponent } from "../../components/loading";
 import { Tags } from "./tags";
-import { useRightbar } from "./tags/rightbar";
-import { AllTags } from "./tags/allTags";
+import { useRightbar } from "./rightBar/rightbar";
+import { AllTags } from "./rightBar/allTags";
 import { CSSTransition } from "react-transition-group";
 
-import style from "./index.module.scss";
+import "./index.scss";
 import "./animate.scss";
 
 function Profile() {
@@ -26,6 +26,7 @@ function Profile() {
 function BlogPage() {
 	//* 不要在这里写基本逻辑，只保留调度逻辑和jsx
 	const { rightbarState, openRightbar, closeRightbar } = useRightbar();
+
 	const {
 		state,
 		setList,
@@ -66,45 +67,41 @@ function BlogPage() {
 	));
 
 	return (
-		<div className={style.styleRoot}>
-			<div className="blog">
-				<AllTags
-					setBlogList={setList}
-					setLoading={tagsSearchLoading}
-					resetBlogList={resetList}
-					needResetList={needResetList}
-					rightbarState={rightbarState}
-					closeRightbar={closeRightbar}
-				/>
-				<div className="left">
-					<div className="blog-list">
-						{element}
-						{!state.hasMore ? (
-							<div className="no-more">
-								没有更多了 ＜（＾－＾）＞
-							</div>
-						) : null}
-						{state.loading ? (
-							<div className="loading">
-								<LoadingComponent />
-							</div>
-						) : null}
-					</div>
+		<div className="blog">
+			<AllTags
+				setBlogList={setList}
+				setLoading={tagsSearchLoading}
+				resetBlogList={resetList}
+				needResetList={needResetList}
+				rightbarState={rightbarState}
+				closeRightbar={closeRightbar}
+			/>
+			<div className="left">
+				<div className="blog-list">
+					{element}
+					{!state.hasMore ? (
+						<div className="no-more">没有更多了 ＜（＾－＾）＞</div>
+					) : null}
+					{state.loading ? (
+						<div className="loading">
+							<LoadingComponent />
+						</div>
+					) : null}
 				</div>
-				<div className="right">
-					<div className="sidebar">
-						<Profile />
-						<Sticky stickyTop={60}>
-							<Tags
-								showAllTags={openRightbar}
-								setBlogList={setList}
-								resetBlogList={resetList}
-								setLoading={tagsSearchLoading}
-								needResetList={needResetList}
-							/>
-							<Series />
-						</Sticky>
-					</div>
+			</div>
+			<div className="right">
+				<div className="sidebar">
+					<Profile />
+					<Sticky stickyTop={60}>
+						<Tags
+							showAllTags={openRightbar}
+							setBlogList={setList}
+							resetBlogList={resetList}
+							setLoading={tagsSearchLoading}
+							needResetList={needResetList}
+						/>
+						<Series />
+					</Sticky>
 				</div>
 			</div>
 		</div>

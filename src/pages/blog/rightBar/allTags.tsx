@@ -1,7 +1,7 @@
-import { TagsList } from ".";
+import { TagsList } from "../tags";
 import { RightBar } from "../../../components/rightBar";
 import { Blog } from "../../../types/data";
-import { useTagsData } from "./tags";
+import { useTagsData } from "../tags/tags";
 
 type AllTagsProps = {
 	setBlogList: (list: Blog[]) => void;
@@ -29,10 +29,15 @@ export function AllTags(props: AllTagsProps) {
 		needResetList
 	);
 
+	const close = () => {
+		resetBlogList();
+		closeRightbar();
+	};
+
 	return (
 		<RightBar
 			show={rightbarState}
-			closeFn={closeRightbar}
+			closeFn={close}
 			hasWrapper={false}
 			width={320}
 			title="All Tags"

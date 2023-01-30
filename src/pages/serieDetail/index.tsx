@@ -1,3 +1,6 @@
+import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { Sticky } from "../../components/sticky";
 import { Blog } from "../../types/data";
 import { formatTime } from "../../utils/time";
 import { getUrl } from "../../utils/url";
@@ -23,7 +26,51 @@ function BlogList(props: { list: Blog[] }) {
 	return <div className="blogs-wrapper">{elements}</div>;
 }
 
-export function SerieDetail() {
+function Outline(props: { blogs: Blog[] }) {
+	const { blogs } = props;
+	const elements = blogs.map(blog => {
+		return (
+			<a className="outline" key={blog.id} href={`#blog${blog.id}`}>
+				{blog.title}
+			</a>
+		);
+	});
+	return (
+		<div className="sidebar-section">
+			<div className="side-section-title">Outline</div>
+			{elements}
+		</div>
+	);
+}
+
+export function GoBack() {
+	const nav = useNavigate();
+	const ref = useRef<HTMLDivElement>(null);
+	const goBack = () => {
+		ref.current.style.display = "none";
+		nav(-1);
+	};
+
+	useEffect(() => {
+		setTimeout(() => {
+			ref.current.style.opacity = "1";
+		}, 300);
+	}, []);
+
+	return (
+		<div
+			ref={ref}
+			className="back-wrapper"
+			v-show="!hideBack"
+			onClick={goBack}
+		>
+			<div className="back"></div>
+			<div className="back-text">Back</div>
+		</div>
+	);
+}
+
+function SerieDetail() {
 	const { state } = useSerieDetailData();
 
 	if (!state.serie) {
@@ -35,10 +82,7 @@ export function SerieDetail() {
 
 	return (
 		<div className="serie-detail">
-			<div className="back-wrapper" v-show="!hideBack">
-				<div className="back"></div>
-				<div className="back-text">Back</div>
-			</div>
+			<GoBack />
 			<div className="head">
 				<img src={getUrl(coverSmall)} className="pic" />
 				<div className="head-filter"></div>
@@ -56,12 +100,13 @@ export function SerieDetail() {
 						<div className="side-section-title">Discription</div>
 						<div className="side-section-main">{description}</div>
 					</div>
-
-					<div className="sidebar-section">
-						<div className="side-section-title">Outline</div>
-					</div>
+					<Sticky stickyTop={80}>
+						<Outline blogs={blogs} />
+					</Sticky>
 				</div>
 			</div>
 		</div>
 	);
 }
+
+export default SerieDetail;

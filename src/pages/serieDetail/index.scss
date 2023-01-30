@@ -1,6 +1,7 @@
 @import "../../styles/variables.scss";
 
 .serie-detail {
+	min-height: calc(100vh - $navbarHeight);
 	.back-wrapper {
 		position: fixed;
 		left: 0;
@@ -13,7 +14,7 @@
 		justify-content: center;
 		align-items: center;
 		transition: all 0.3s ease;
-		animation: opacity-show 0.3s ease;
+		opacity: 0;
 		&:hover {
 			transform: translateX(-3px);
 		}

@@ -1,20 +1,11 @@
 import { useRef, useState } from "react";
 import { LinkProps, useOutlet } from "react-router-dom";
-import { CustomLink } from "./customLink";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import "./index.scss";
 import { RightBar } from "../components/rightBar";
 import { useLocation } from "react-router-dom";
 import { ScrollContainer } from "./scrollContainer";
-
-function NavLink({ children, to, ...props }: LinkProps) {
-	return (
-		<CustomLink to={to} {...props}>
-			{children}
-			<div className="nav-underline"></div>
-		</CustomLink>
-	);
-}
+import NavLink from "./customLink";
 
 function useRightBarCtrl() {
 	const [rightBarState, setRightBarState] = useState(false);
@@ -31,7 +22,7 @@ function Layout() {
 	const currentOutlet = useOutlet();
 
 	return (
-		<div className="layout">
+		<div className="page-layout">
 			<a href="#blog-top-anchor" id="blog-top-anchor"></a>
 			<div className="navbar">
 				<div className="nav-left"></div>

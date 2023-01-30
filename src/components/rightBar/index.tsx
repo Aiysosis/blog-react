@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import "./index.scss";
+import css from "./index.module.scss";
 
 type RightBarProps = {
 	show: boolean;
@@ -24,25 +24,27 @@ type MainProps = {
 };
 
 function SideMain(props: MainProps) {
+	const { rightBar, head, close, empty } = css;
+
 	return (
 		<CSSTransition
 			in={props.show}
 			timeout={300}
-			classNames="slide"
+			classNames="left-slide"
 			onExited={props.closeWrapper}
 			unmountOnExit
 		>
 			<div
-				className="right-bar"
+				className={rightBar}
 				style={{ width: props.width }}
 				onClick={e => e.stopPropagation()}
 			>
-				<div className="head">
-					<div className="close" onClick={props.closeFn}></div>
-					<div className="title">{props.title}</div>
-					<div className="empty">{props.headRight}</div>
+				<div className={head}>
+					<div className={close} onClick={props.closeFn}></div>
+					<div>{props.title}</div>
+					<div className={empty}>{props.headRight}</div>
 				</div>
-				<div className="content">{props.children}</div>
+				<div>{props.children}</div>
 			</div>
 		</CSSTransition>
 	);
@@ -62,7 +64,7 @@ export function RightBar(props: RightBarProps) {
 
 	if (props.hasWrapper) {
 		return (
-			<div className="right-bar-wrapper" onClick={closeInner}>
+			<div className={css.wrapper} onClick={closeInner}>
 				<SideMain
 					show={showInner}
 					width={props.width}

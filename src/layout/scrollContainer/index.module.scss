@@ -1,38 +1,42 @@
 @import "../../styles/variables.scss";
 
 // upshow
-.upshow-enter-active,
-.upshow-exit-active {
-	transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.27);
+:global {
+	.upshow-enter-active,
+	.upshow-exit-active {
+		transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.27);
+	}
+
+	.upshow-exit,
+	.upshow-enter-done {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.upshow-enter,
+	.upshow-exit-done {
+		opacity: 0;
+		transform: translateY(30px);
+	}
 }
 
-.upshow-exit,
-.upshow-enter-done {
-	opacity: 1;
-	transform: translateY(0);
-}
-
-.upshow-enter,
-.upshow-exit-done {
-	opacity: 0;
-	transform: translateY(30px);
-}
-
-.scroll-container {
+.scrollContainer {
 	height: calc(100vh - $navbarHeight);
 	scroll-behavior: smooth;
 	overflow-y: auto;
 	position: relative;
-	#scroll-top-anchor {
-		position: absolute;
-		top: 0;
-		opacity: 0;
-		z-index: -1;
+	:global {
+		#scroll-top-anchor {
+			position: absolute;
+			top: 0;
+			opacity: 0;
+			z-index: -1;
+		}
 	}
-	.page-main {
+	.pageMain {
 		min-height: calc(100vh - $navbarHeight);
 	}
-	.right-bottom {
+	.rightBottom {
 		position: fixed;
 		right: 20px;
 		bottom: 15px;
@@ -41,7 +45,7 @@
 		justify-content: flex-start;
 		align-items: center;
 		z-index: 998;
-		.back-to-top {
+		.backToTop {
 			width: 40px;
 			height: 40px;
 			border-radius: 5px;
@@ -52,7 +56,7 @@
 			&:hover {
 				transform: translateY(-8px);
 			}
-			&:not(.applied) {
+			&:not(:global(.applied)) {
 				display: none;
 			}
 		}
@@ -71,7 +75,7 @@
 			}
 		}
 	}
-	.page-foot {
+	.pageFoot {
 		height: $pageFootHeight;
 		background-color: whitesmoke;
 		display: flex;
