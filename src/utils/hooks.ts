@@ -22,36 +22,4 @@ export function useRenderWatcher() {
 	console.log(`render times: ${count.current}`);
 }
 
-/**
- * 通过自定义hook实现 setState的回调函数 https://zhuanlan.zhihu.com/p/266203370
- * @param initialState
- * @returns
- */
-export function useStateWithCallback<T>(
-	initialState: T
-): [T, (value: React.SetStateAction<T>, ...callbacks: Function[]) => void] {
-	const [state, setState] = useState(initialState);
-	const [key, setKey] = useState({}); // promise to update when call setState
-	const handlers = useRef(new Set<Function>()).current;
 
-	useEffect(() => {
-		handlers.forEach(handler => handler());
-		handlers.clear();
-	}, [key]);
-
-	return [
-		state,
-		useCallback(
-			(value: React.SetStateAction<T>, ...callbacks: Function[]) => {
-				if (callbacks) {
-					for (const callback of callbacks) {
-						handlers.add(callback);
-					}
-				}
-				setState(value);
-				setKey({}); // create a empty object each time, inorder to trigger useEffect
-			},
-			[]
-		),
-	];
-}

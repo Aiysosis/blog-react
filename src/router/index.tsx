@@ -17,6 +17,7 @@ export const routes: RouteObject[] = [
 				path: "/",
 				children: [
 					{
+						id: "blog",
 						index: true,
 						element: (
 							<Suspense fallback={<Loading />}>
@@ -25,6 +26,7 @@ export const routes: RouteObject[] = [
 						),
 					},
 					{
+						id: "blog-detail",
 						path: "blogdetail/:id",
 						element: (
 							<Suspense fallback={<Loading />}>
@@ -36,6 +38,7 @@ export const routes: RouteObject[] = [
 			},
 
 			{
+				id: "home",
 				path: "/home",
 				element: (
 					<Suspense fallback={<Loading />}>
@@ -47,6 +50,7 @@ export const routes: RouteObject[] = [
 				path: "/series",
 				children: [
 					{
+						id: "series",
 						index: true,
 						element: (
 							<Suspense fallback={<Loading />}>
@@ -55,6 +59,7 @@ export const routes: RouteObject[] = [
 						),
 					},
 					{
+						id: "serie-detail",
 						path: "seriedetail/:id",
 						element: (
 							<Suspense fallback={<Loading />}>

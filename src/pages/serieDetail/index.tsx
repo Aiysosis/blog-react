@@ -1,4 +1,20 @@
-import { useEffect, useRef } from "react";
+import { routes } from "../../router";
+import {
+	LocationContext,
+	useLocationConsumer,
+} from "@/shared/context/location";
+import { TestContext } from "@/shared/context/test";
+import { useContext, useEffect, useRef } from "react";
+import {
+	matchPath,
+	matchRoutes,
+	resolvePath,
+	useLocation,
+	useMatch,
+	useMatches,
+	useNavigation,
+	useResolvedPath,
+} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Sticky } from "../../components/sticky";
 import { Blog } from "../../types/data";
@@ -9,6 +25,7 @@ import { useSerieDetailData } from "./data";
 
 import "./index.scss";
 import { SerieBlogCard } from "./serieBlogCard";
+import { getRouteObjectByLocation } from "@/router/helper";
 
 function BlogList(props: { list: Blog[] }) {
 	const { list } = props;
@@ -46,9 +63,20 @@ function Outline(props: { blogs: Blog[] }) {
 export function GoBack() {
 	const nav = useNavigate();
 	const ref = useRef<HTMLDivElement>(null);
+
+	const { from, to } = useLocationConsumer();
+
 	const goBack = () => {
-		ref.current.style.display = "none";
-		nav(-1);
+		ref.current.style.display = "none"; // hide button
+		if (from === null) {
+			nav("/series");
+		} else {
+			const fromId = getRouteObjectByLocation(from);
+			const toId = getRouteObjectByLocation(to);
+			if (fromId === toId) {
+				nav("/series"); //相同页面的跳转，选择直接返回
+			} else nav(-1);
+		}
 	};
 
 	useEffect(() => {

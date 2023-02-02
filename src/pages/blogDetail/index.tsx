@@ -3,10 +3,50 @@ import { formatTime } from "@/utils/time";
 import { getUrl } from "@/utils/url";
 import { Loading } from "../loading";
 import { useData } from "./data";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/markdown.scss";
 import "../../styles/prism-onedark.css";
 import "./index.scss";
+import { useLocationConsumer } from "@/shared/context/location";
+import { getRouteObjectByLocation } from "@/router/helper";
+
+function GoBack() {
+	const nav = useNavigate();
+	const ref = useRef<HTMLDivElement>(null);
+
+	const { from, to } = useLocationConsumer();
+
+	const goBack = () => {
+		ref.current.style.display = "none"; // hide button
+		if (from === null) {
+			nav("/");
+		} else {
+			const fromId = getRouteObjectByLocation(from);
+			const toId = getRouteObjectByLocation(to);
+			if (fromId === toId) {
+				nav("/"); //相同页面的跳转，选择直接返回
+			} else nav(-1);
+		}
+	};
+
+	useEffect(() => {
+		setTimeout(() => {
+			ref.current.style.opacity = "1";
+		}, 300);
+	}, []);
+
+	return (
+		<div
+			ref={ref}
+			className="back-wrapper"
+			v-show="!hideBack"
+			onClick={goBack}
+		>
+			<div className="back"></div>
+			<div className="back-text">Back</div>
+		</div>
+	);
+}
 
 function BlogDetail() {
 	const { state } = useData();
@@ -35,10 +75,7 @@ function BlogDetail() {
 		const { coverSmall, title, publishedTime } = state.blogDetail;
 		return (
 			<div className="blog-detail">
-				<Link to={"/"} className="back-wrapper">
-					<div className="back"></div>
-					<div className="back-text">Back</div>
-				</Link>
+				<GoBack />
 
 				<div className="blog-head">
 					<img

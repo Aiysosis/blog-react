@@ -2,6 +2,7 @@ import { getUrl } from "@/utils/url";
 import { Blog } from "@/types/data";
 import { formatTime } from "@/utils/time";
 import css from "./index.module.scss";
+import { Link } from "react-router-dom";
 
 type SerieBlogCardProps = {
 	blog: Blog;
@@ -30,6 +31,9 @@ export function SerieBlogCard(props: SerieBlogCardProps) {
 						{formatTime(publishedTime, "YYYY-MM-DD")}
 					</div>
 					<div className={css.discription}>{description}</div>
+					<Link to={`/blogdetail/${id}`} className={css.btn}>
+						start
+					</Link>
 				</div>
 			</div>
 			<div className={css.sectionPic}>
