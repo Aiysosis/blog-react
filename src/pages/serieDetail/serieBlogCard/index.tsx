@@ -1,6 +1,6 @@
-import { getUrl } from "@/utils/url";
-import { Blog } from "@/types/data";
-import { formatTime } from "@/utils/time";
+import { getUrl } from "../../../utils/url";
+import { Blog } from "../../../types/data";
+import { formatTime } from "../../../utils/time";
 import css from "./index.module.scss";
 import { Link } from "react-router-dom";
 

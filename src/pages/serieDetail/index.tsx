@@ -1,20 +1,5 @@
-import { routes } from "../../router";
-import {
-	LocationContext,
-	useLocationConsumer,
-} from "@/shared/context/location";
-import { TestContext } from "@/shared/context/test";
-import { useContext, useEffect, useRef } from "react";
-import {
-	matchPath,
-	matchRoutes,
-	resolvePath,
-	useLocation,
-	useMatch,
-	useMatches,
-	useNavigation,
-	useResolvedPath,
-} from "react-router-dom";
+import { useLocationConsumer } from "../../layout/location";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sticky } from "../../components/sticky";
 import { Blog } from "../../types/data";
@@ -22,10 +7,9 @@ import { formatTime } from "../../utils/time";
 import { getUrl } from "../../utils/url";
 import { Loading } from "../loading";
 import { useSerieDetailData } from "./data";
-
-import "./index.scss";
 import { SerieBlogCard } from "./serieBlogCard";
-import { getRouteObjectByLocation } from "@/router/helper";
+import { getRouteObjectByLocation } from "../../router/helper";
+import "./index.scss";
 
 function BlogList(props: { list: Blog[] }) {
 	const { list } = props;

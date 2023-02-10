@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import API from "../../../services";
 import { Tag } from "../../../types/data";
-import { useStateRef, useStateWithCallback } from "../../../utils/hooks";
+import { useStateRef } from "../../../utils/hooks";
 
 export interface TagsState {
 	tags: Tag[];

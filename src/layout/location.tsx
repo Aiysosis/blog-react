@@ -9,7 +9,7 @@ type LocationTrans = {
 export const LocationContext =
 	createContext<React.MutableRefObject<LocationTrans>>(null);
 
-export function useLocationContext() {
+export function WithLocationListener(props: { children: React.ReactNode }) {
 	const location = useLocation();
 
 	const locationState = useRef<LocationTrans>({
@@ -22,7 +22,11 @@ export function useLocationContext() {
 		locationState.current.to = location;
 	}, [location]);
 
-	return locationState;
+	return (
+		<LocationContext.Provider value={locationState}>
+			{props.children}
+		</LocationContext.Provider>
+	);
 }
 
 export function useLocationConsumer(): LocationTrans {

@@ -37,15 +37,15 @@ export const routes: RouteObject[] = [
 				],
 			},
 
-			{
-				id: "home",
-				path: "/home",
-				element: (
-					<Suspense fallback={<Loading />}>
-						<HomePage />
-					</Suspense>
-				),
-			},
+			// {
+			// 	id: "home",
+			// 	path: "/home",
+			// 	element: (
+			// 		<Suspense fallback={<Loading />}>
+			// 			<HomePage />
+			// 		</Suspense>
+			// 	),
+			// },
 			{
 				path: "/series",
 				children: [

@@ -1,14 +1,14 @@
-import { Fragment, useEffect, useRef } from "react";
-import { formatTime } from "@/utils/time";
-import { getUrl } from "@/utils/url";
+import { useEffect, useRef } from "react";
+import { formatTime } from "../../utils/time";
+import { getUrl } from "../../utils/url";
 import { Loading } from "../loading";
 import { useData } from "./data";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../styles/markdown.scss";
 import "../../styles/prism-onedark.css";
 import "./index.scss";
-import { useLocationConsumer } from "@/shared/context/location";
-import { getRouteObjectByLocation } from "@/router/helper";
+import { useLocationConsumer } from "../../layout/location";
+import { getRouteObjectByLocation } from "../../router/helper";
 
 function GoBack() {
 	const nav = useNavigate();
